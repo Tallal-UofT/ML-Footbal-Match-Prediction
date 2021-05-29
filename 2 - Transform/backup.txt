@@ -1,0 +1,84 @@
+## start
+# Load:
+options(scipen=999)
+rm(list=ls())
+Start = Sys.time()
+# 0a - Install and load required packages
+pkgs <- c("tidyverse","openxlsx","stringr","lubridate","magrittr", "haven","rstudioapi","readxl","data.table","scales","ggrepel", "dplyr", "mosaic")
+# Install: - should not need to re-install if already installed
+# install.packages(pkgs)
+# Load:
+lapply(pkgs, require, character.only = TRUE)
+###############################################
+###             Read-ins and Paths          ###
+###############################################
+Output <- 'C:/Users/Talla/Documents/Projects/FIFA Match Win Prediction/2 - Transform/OUTPUT'
+###############################################
+###             Wrangle Players Data       ###
+###############################################
+Players_DF <- read.csv("C:/Users/Talla/Documents/Projects/FIFA Match Win Prediction/Data/FIFA Player/FIFA Data Sets/players_15.csv")
+Leagues_Keep <- c('Belgian Jupiler Pro League','English League Championship','English Premier League','French Ligue 1','French Ligue 2','German 1. Bundesliga','German 2. Bundesliga','Holland Eredivisie','Italian Serie A','Italian Serie B','Scottish Premiership','Spain Primera Division','Spanish Segunda DivisiÃ³n')
+Best_Players_DF <- Players_DF %>%
+  filter(club_name != "") %>%
+  select(-(ls:rb)) %>%
+  select(-c(player_tags, preferred_foot, sofifa_id, player_url, body_type, real_face, release_clause_eur, team_jersey_number, loaned_from, joined, contract_valid_until, nation_jersey_number)) %>%
+  arrange(desc(club_name,overall,potential)) %>%
+  group_by(club_name) %>%
+  mutate(Rank_overall = row_number(desc(overall))) %>%
+  filter(Rank_overall < 20) %>%
+  ungroup() %>%
+  filter(league_name %in% Leagues_Keep)
+
+i <- sapply(Best_Players_DF, is.factor)
+Best_Players_DF[i] <- lapply(Best_Players_DF[i], as.character)
+
+Best_Players_DF <- mutate(Best_Players_DF, Att_Work_Rate_Ind = derivedFactor(
+  "1" = (grepl("High/", work_rate)),
+  "0.5" = (grepl("Medium/", work_rate)),
+  .method = "first",
+  .default = 0,
+  .asFactor = F))
+
+Best_Players_DF <- mutate(Best_Players_DF, Def_Work_Rate_Ind = derivedFactor(
+  "1" = (grepl("/High", work_rate)),
+  "0.5" = (grepl("/Medium", work_rate)),
+    .method = "first",
+  .default = 0,
+  .asFactor = F))
+
+Variables_Convert <- c('international_reputation', 'weak_foot', 'skill_moves')
+for (convert in Variables_Convert){
+  print(convert)
+  Best_Players_DF[convert] <- Best_Players_DF[convert]*20
+}
+
+
+Variables_Names_GK <- Best_Players_DF %>%
+  select(goalkeeping_diving:goalkeeping_reflexes) %>%
+  names()
+for (Change_v in Variables_Names_GK){
+  print(Change_v)
+  Best_Players_DF[Best_Players_DF$player_positions != "GK", Change_v] <- NA
+}
+
+Variables_Names_nonGK <- Best_Players_DF %>%
+  select(attacking_crossing:defending_sliding_tackle)  %>%
+  names()
+for (Change_v in Variables_Names_nonGK){
+  print(Change_v)
+  Best_Players_DF[Best_Players_DF$player_positions == "GK", Change_v] <- NA
+}
+
+
+Best_Players_DF <- Best_Players_DF %>%
+  mutate(player_traits = replace(player_traits, player_positions == 'GK', ''))
+List_Traits <- unique(c(as.character(Best_Players_DF$player_traits)))
+List_Traits <- trimws(unique(unlist(strsplit(List_Traits, ","))))
+for (trait in List_Traits){
+  print(paste0('Trait_', gsub(' ', '_', trait)))
+  Best_Players_DF[[paste0('Trait_', gsub(" ", "_", trait))]] <- ifelse(grepl(trait, Best_Players_DF$player_traits), "100", "0")
+}
+
+Tab <-  Best_Players_DF %>%
+  group_by(league_name) %>%
+  summarize(number = mean(overall))
