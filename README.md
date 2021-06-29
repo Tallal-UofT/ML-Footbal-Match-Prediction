@@ -2,7 +2,7 @@
 
 This project aims to use publicly available data for football players to attempt to predict the outcomes for the recent 2020-21 football seasons for the top First and Second Football divisions in Spain, France, England, Germany, Italy, Belgium, Scotland and Netherlands. The 2014-15 to 2019-20 season match outcomes are used as a training set.
 
-The project uses machine learning best practices and methods such as cross validation for parameter selection, balancing classes in addition to advanced machine learning techniques such as Lasso regressions, Random Forests and Principal component analysis.
+The project uses machine learning best practices and methods such as cross validation for parameter selection, balancing classes in addition to advanced machine learning techniques such as Lasso regressions, Random Forests and Principal component analysis to see if match outcomes can be predicted accuratly using publicly available data.
 
 Predicting match outcomes is an especially tricky exercise despite having a lot of metrics regarding the statistics of every player in a team, other factors such as morale, injuries, pitch/weather conditions and the specific strategies employed by teams against each other tend to be very important and difficult to measure. Despite the use of fixed effects it is important to realize that there is some aspect of reinforcement learning, team strategies are constantly adapting, at times several times within the same game. Another important aspect of this study is checking how much does strategy actually matters. Any predictive power that falls short, can be attributed to strategy and its lack of control in our model. 
 
@@ -11,7 +11,7 @@ While there are ways of controlling for strategy they require more detailed non-
 # 1. Model & Data
 
 ### 1.11. Football Players Data
-Football players data is gathered from FIFA, and includes information that includes a players speed, shooting, agility, physicality etc. for each individual season. This data is at the player level. The data is reduced to provide one row for each team that includes the average of that teams ability metrics for the position that they play in. This results in 4 series of metrics for the 4 broad components of a team, the defense, midfield, attack and finally the goalkeeper. This provides a row of metrics for each Team for one football season that provides metrics on how each of their 4 elements are ranked.
+Football players data is gathered from FIFA (https://sofifa.com/), and includes information that includes a players speed, shooting, agility, physicality etc. for each individual season. This data is at the player level. The data is reduced to provide one row for each team that includes the average of that teams ability metrics for the position that they play in. This results in 4 series of metrics for the 4 broad components of a team, the defense, midfield, attack and finally the goalkeeper. This provides a row of metrics for each Team for one football season that provides metrics on how each of their 4 elements are ranked.
 
 After this processing the data contains nearly 230 columns of metrics for each team during a single season.
 
