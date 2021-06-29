@@ -1,22 +1,23 @@
 # Introduction
 
-This project aims to use publicly available data for football players to attempt to predict the outcomes for the recent 2020-21 football seasons for the First and Second Football divisions in Spain, France, England, Germany, Italy, Belgium, Scotland and Netherlands. The 2014-15 to 2019-20 season match outcomes are used as a training set.
+This project aims to use publicly available data for football players to attempt to predict the outcomes for the recent 2020-21 football seasons for the top First and Second Football divisions in Spain, France, England, Germany, Italy, Belgium, Scotland and Netherlands. The 2014-15 to 2019-20 season match outcomes are used as a training set.
 
-Predicting match outcomes is an especially tricky exercise despite having a lot of metrics regarding the statistics of every player in a team, other factors such as morale, injuries, pitch/weather conditions and the specific strategies employed by teams against each other. Despite the use of fixed effects it is important to realize that there is some aspect of reinforcement learning, team strategies are constantly adapting, at times several times within the same game. Another important aspect of this study is actually checking how much does strategy matter. Any predictive power that falls short, can be attributed to strategy and its lack of control in our model. 
+Predicting match outcomes is an especially tricky exercise despite having a lot of metrics regarding the statistics of every player in a team, other factors such as morale, injuries, pitch/weather conditions and the specific strategies employed by teams against each other tend to be very important and difficult to measure. Despite the use of fixed effects it is important to realize that there is some aspect of reinforcement learning, team strategies are constantly adapting, at times several times within the same game. Another important aspect of this study is checking how much does strategy actually matters. Any predictive power that falls short, can be attributed to strategy and its lack of control in our model. 
 
-While there are ways of controlling for strategy they require more detailed non-public data and more computationally intensive techniques which we will discuss further later.
+While there are ways of controlling for strategy they require more detailed non-public data and more computationally intensive techniques which we will discuss in detail later on.
 
 # 1. Model & Data
 
 ### 1.11. Football Players Data
-Football players data is gathered from FIFA, and includes information that includes a players speed, shooting, agility, physicality etc. for each individual season. This data is at the player level. The data is reduced to provide one row for each team that includes the average of that teams members ability metrics. This provides a row of metrics for each Team for one football season.
+Football players data is gathered from FIFA, and includes information that includes a players speed, shooting, agility, physicality etc. for each individual season. This data is at the player level. The data is reduced to provide one row for each team that includes the average of that teams ability metrics for the position that they play in. This results in 4 series of metrics for the 4 broad components of a team, the defense, midfield, attack and finally the goalkeeper. This provides a row of metrics for each Team for one football season that provides metrics on how each of their 4 elements are ranked.
 
-This data provides nearly 230 columns of metrics for each team during a single season. The chart below shows the distribution of the overall metric for each team.
+After this processing the data contains nearly 230 columns of metrics for each team during a single season.
 
 ### 1.12. Football Match Data
-Football Match data is gathered from https://www.football-data.co.uk. Which provides data for the date of the match, the final score as well as which team was the home/away side.
+Football Match data is gathered from https://www.football-data.co.uk. Which provides data for the date of the match, the final score as well as which team was the home/away side. Additionally a "crosswalk" is constructed to allow us to merge the two data sets seamlessly.
 
-One season for a single league contains approximately 300-400 league games depending on the number of teams (excluding external competitions).
+One season for a single league contains approximately 300-400 league games depending on the number of teams (excluding external competitions). 
+
 
 ### 1.13 Balancing the Training set
 
@@ -24,4 +25,15 @@ The match outcomes while balanced between Lose and Win outcomes, include a small
 
 While SMOTE (Synthetic Minority Oversampling TEchnique) is an alternative to sampling upwards to create a balanced training set, due to high dimensionality of our data it is very difficult to implement SMOTE efficiently.
 
-### 1.14 The Model
+#2. The Results
+
+We use techniques ranging from Multinomial Logit to Lasso regression to more complex and computationally intensive techniques such as Random Forests.
+Our results show that the Boosted Trees model achieves the greatest accuracy.
+
+However, one consistent pattern illustrated in all implemented ML techniques shows that the models have more difficulty accurately predicting a draw as compared to a win or a loss. This might be explained by the fact that draws themselves are a product idiosyncrasies or team strategies to "park the bus" (only play defensive) in the face of a far stronger opponent. 
+
+Several football strategies such as playing on the counter, meaning that strong teams can draw with teams that anticipate they have little probability of wining using usual strategies therefore heavily rely on defense to secure a draw. Therefore we are likely to see a clear win/loss in teams that are closely matched in terms of metrics however if there exists an imbalance in the strength of the teams we might see a draw with greater likelihood as compared to a match with closely matched teams.
+
+The results show that without the deficiency of draw predictions our models do far better for loses and wins as compared to draw. For instance the Boosted trees predict wins by an accuracy of 75%!
+
+
