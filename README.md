@@ -2,6 +2,8 @@
 
 This project aims to use publicly available data for football players to attempt to predict the outcomes for the recent 2020-21 football seasons for the top First and Second Football divisions in Spain, France, England, Germany, Italy, Belgium, Scotland and Netherlands. The 2014-15 to 2019-20 season match outcomes are used as a training set.
 
+The project uses machine learning best practices and methods such as cross validation for parameter selection, balancing classes in addition to advanced machine learning techniques such as Lasso regressions, Random Forests and Principal component analysis.
+
 Predicting match outcomes is an especially tricky exercise despite having a lot of metrics regarding the statistics of every player in a team, other factors such as morale, injuries, pitch/weather conditions and the specific strategies employed by teams against each other tend to be very important and difficult to measure. Despite the use of fixed effects it is important to realize that there is some aspect of reinforcement learning, team strategies are constantly adapting, at times several times within the same game. Another important aspect of this study is checking how much does strategy actually matters. Any predictive power that falls short, can be attributed to strategy and its lack of control in our model. 
 
 While there are ways of controlling for strategy they require more detailed non-public data and more computationally intensive techniques which we will discuss in detail later on.
@@ -25,9 +27,9 @@ The match outcomes while balanced between Lose and Win outcomes, include a small
 
 While SMOTE (Synthetic Minority Oversampling TEchnique) is an alternative to sampling upwards to create a balanced training set, due to high dimensionality of our data it is very difficult to implement SMOTE efficiently.
 
-#2. The Results
+# 2. The Results
 
-We use techniques ranging from Multinomial Logit to Lasso regression to more complex and computationally intensive techniques such as Random Forests.
+We use techniques ranging from Multinomial Logit to Lasso regression to more complex and computationally intensive techniques such as Random Forests. 
 Our results show that the Boosted Trees model achieves the greatest accuracy.
 
 However, one consistent pattern illustrated in all implemented ML techniques shows that the models have more difficulty accurately predicting a draw as compared to a win or a loss. This might be explained by the fact that draws themselves are a product idiosyncrasies or team strategies to "park the bus" (only play defensive) in the face of a far stronger opponent. 
@@ -35,5 +37,13 @@ However, one consistent pattern illustrated in all implemented ML techniques sho
 Several football strategies such as playing on the counter, meaning that strong teams can draw with teams that anticipate they have little probability of wining using usual strategies therefore heavily rely on defense to secure a draw. Therefore we are likely to see a clear win/loss in teams that are closely matched in terms of metrics however if there exists an imbalance in the strength of the teams we might see a draw with greater likelihood as compared to a match with closely matched teams.
 
 The results show that without the deficiency of draw predictions our models do far better for loses and wins as compared to draw. For instance the Boosted trees predict wins by an accuracy of 75%!
+
+# 3. Next Steps
+
+While the results are promising there are a few possible next steps that might improve our predictions. These involve improving our data as well as implementing more complex and intensive models.
+
+  1. Using dynamic data that is updated match to match rather than snapshots from the begining of the season may more accuratly capture a players performance.
+  2. Using Non-linear kernel methods with sufficient interaction terms could also lead to greater accuracy and control for some of the strategic decision that lead to inaccuracy.
+  3. Given the high correlation between the different variables it might also be worthwhile using Partial Least Squares in addition to PCA for dimensionality reduction, in that it may improve performance. We see that PCA improves prediction in some models.
 
 
