@@ -2,7 +2,7 @@
 
 This project aims to use publicly available data for football players to attempt to predict the outcomes for the recent 2020-21 football seasons for the top First and Second Football divisions in Spain, France, England, Germany, Italy, Belgium, Scotland and Netherlands. The 2014-15 to 2019-20 season match outcomes are used as a training set.
 
-The project uses machine learning best practices and methods such as cross validation for parameter selection, balancing classes in addition to advanced machine learning techniques such as Lasso regressions, Random Forests and Principal component analysis to see if match outcomes can be predicted accuratly using publicly available data.
+The project uses machine learning best practices and methods such as cross validation for parameter selection, balancing classes in addition to advanced machine learning techniques such as Lasso regressions, Random Forests and Principal component analysis to see if match outcomes can be predicted using publicly available data.
 
 Predicting match outcomes is an especially tricky exercise despite having a lot of metrics regarding the statistics of every player in a team, other factors such as morale, injuries, pitch/weather conditions and the specific strategies employed by teams against each other tend to be very important and difficult to measure. Despite the use of fixed effects it is important to realize that there is some aspect of reinforcement learning, team strategies are constantly adapting, at times several times within the same game. Another important aspect of this study is checking how much does strategy actually matters. Any predictive power that falls short, can be attributed to strategy and its lack of control in our model. 
 
