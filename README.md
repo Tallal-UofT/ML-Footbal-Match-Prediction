@@ -47,7 +47,7 @@ The results show that without the deficiency of draw predictions our models do f
 While the results are promising there are a few possible next steps that might improve our predictions. These involve improving our data as well as implementing more complex and intensive models.
 
   1. Using dynamic data that is updated match to match rather than snapshots from the begining of the season may more accuratly capture a players performance. 
-  2. Using data that lists the manager for each 
+  2. Using data that lists the coaching staff for each team, this may allow greater control for strategy and improve predictive power.
   3. Using Non-linear kernel methods with sufficient interaction terms could also lead to greater accuracy and control for some of the strategic decision that lead to inaccuracy.
   4. Given the high correlation between the different variables it might also be worthwhile using Partial Least Squares in addition to PCA for dimensionality reduction, in that it may improve performance. We see that PCA improves prediction in some models.
 
