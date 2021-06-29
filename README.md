@@ -2,9 +2,13 @@
 
 This project aims to use publicly available data for football players to attempt to predict the outcomes for the recent 2020-21 football seasons for the top First and Second Football divisions in Spain, France, England, Germany, Italy, Belgium, Scotland and Netherlands. The 2014-15 to 2019-20 season match outcomes are used as a training set.
 
-The project uses machine learning best practices and methods such as cross validation for parameter selection, balancing classes in addition to advanced machine learning techniques such as Lasso regressions, Random Forests and Principal component analysis to see if match outcomes can be predicted using publicly available data.
+The project uses machine learning best practices and methods such as cross validation for parameter selection, balancing classes in addition to advanced machine learning techniques such as Lasso regressions, Random Forests and Principal component analysis.
 
-Predicting match outcomes is an especially tricky exercise despite having a lot of metrics regarding the statistics of every player in a team, other factors such as morale, injuries, pitch/weather conditions and the specific strategies employed by teams against each other tend to be very important and difficult to measure. Despite the use of fixed effects it is important to realize that there is some aspect of reinforcement learning, team strategies are constantly adapting, at times several times within the same game. Another important aspect of this study is checking how much does strategy actually matters. Any predictive power that falls short, can be attributed to strategy and its lack of control in our model. 
+Predicting match outcomes is an especially tricky exercise despite having a lot of metrics regarding the statistics of every player in a team, other factors such as morale, injuries, pitch/weather conditions and the specific strategies employed by teams against each other tend to be very important and difficult to measure. Despite the use of fixed effects it is important to realize that there is some aspect of reinforcement learning, team strategies are constantly adapting, at times several times within the same game. For a manager realizing that they lack in holding the opposing team back when they counter may choose to leave more defenders behind when they attack. Similarly the opposing manager may realize the change in strategy and adapt as well.
+
+This project has two aims, one to check which technique/methods provides the greatest accuracy for predicting match outcomes, and second to test for the importance of strategy in determining the outcome of matches. While we can't test for the presence/importance of strategy directly, we do have metrics on every possible feature of each team, therefore we can test the importance of strategy by checking how far are predictions fall short in the absence of controls for strategy.
+
+The second question is of importance to the dynamics of the game in recent years, with the inflow of foreign funding and the ability of teams to purchase the best players they please, we are seeing the rise of those clubs which possess the most money. However, is the rise due to their ability to buy the best players or the best staff to create the best tactics? Likely the answer is a mixture of both, but is strategy important enough that smaller teams that lack funding can pull wins with a superior strategy?
 
 While there are ways of controlling for strategy they require more detailed non-public data and more computationally intensive techniques which we will discuss in detail later on.
 
@@ -42,8 +46,9 @@ The results show that without the deficiency of draw predictions our models do f
 
 While the results are promising there are a few possible next steps that might improve our predictions. These involve improving our data as well as implementing more complex and intensive models.
 
-  1. Using dynamic data that is updated match to match rather than snapshots from the begining of the season may more accuratly capture a players performance.
-  2. Using Non-linear kernel methods with sufficient interaction terms could also lead to greater accuracy and control for some of the strategic decision that lead to inaccuracy.
-  3. Given the high correlation between the different variables it might also be worthwhile using Partial Least Squares in addition to PCA for dimensionality reduction, in that it may improve performance. We see that PCA improves prediction in some models.
+  1. Using dynamic data that is updated match to match rather than snapshots from the begining of the season may more accuratly capture a players performance. 
+  2. Using data that lists the manager for each 
+  3. Using Non-linear kernel methods with sufficient interaction terms could also lead to greater accuracy and control for some of the strategic decision that lead to inaccuracy.
+  4. Given the high correlation between the different variables it might also be worthwhile using Partial Least Squares in addition to PCA for dimensionality reduction, in that it may improve performance. We see that PCA improves prediction in some models.
 
 
