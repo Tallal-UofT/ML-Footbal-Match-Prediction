@@ -1,3 +1,6 @@
+# How to run:
+The folder "5 - Machine Learning" contains an R Markdown file that can be edited to run the machine learning algorithms or new algorithms. 
+
 # Introduction
 
 This project aims to use publicly available data for football players to attempt to predict the outcomes for the recent 2020-21 football seasons for the top First and Second Football divisions in Spain, France, England, Germany, Italy, Belgium, Scotland and Netherlands. The 2014-15 to 2019-20 season match outcomes are used as a training set.
